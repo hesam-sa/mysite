@@ -41,7 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
     'blog'
+    
 ]
+
+DJANGO_ICONS = {
+    "ICONS": {
+        "edit": {"name": "fa-solid fa-pencil"},
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
