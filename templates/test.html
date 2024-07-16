@@ -6,7 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    <P>{{post.title}}</P>
+    {% for post in post %}
+    <P>{{post.published_date}}</P>
+    {% endfor %}
     <P>{{now}}</P>
 </body>
 </html>

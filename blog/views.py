@@ -15,9 +15,9 @@ def blog_view(request):
 def blog_single(request):
     return render(request,'blog/blog-single.html')
 
-def test(request,pid):
-    now=datetime.date.today
-    post = Post.objects.filter(published_date__gte = now)
+def test(request):
+    now=datetime.datetime.now()
+    post = Post.objects.filter(published_date__lte=now)
     # post = Post.objects.filter(status=1)
     context = {'post':post,'now':now}
     return render(request,'test.html',context)
