@@ -6,14 +6,17 @@ from django.http import HttpResponse,JsonResponse
 from blog.models import Post
 import datetime
 
-# 
-# context = {'posts':post}
+
 
 def blog_view(request):
+    post=Post.objects.filter(status=1)
+    context = {'post':post}
     return render(request,'blog/blog-home.html',context)
 
-def blog_single(request):
-    return render(request,'blog/blog-single.html')
+def blog_single(request,pid):
+    post=get_object_or_404(Post,pk=pid)
+    context = {'post':post}
+    return render(request,'blog/blog-single.html',context)
 
 def test(request):
     now=datetime.datetime.now()
@@ -25,6 +28,11 @@ def test2(request,pid):
     post= Post.objects.get(id=pid)
     post.counted_view += 1
     post.save()
+    context={'post':post}
+    return render(request,'test2.html',context)
+
+def test3(request,pid):
+    post = Post.objects.get(id=pid)
     context={'post':post}
     return render(request,'test2.html',context)
 
