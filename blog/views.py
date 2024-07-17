@@ -16,7 +16,10 @@ def blog_view(request):
     return render(request,'blog/blog-home.html',context)
 
 def blog_single(request,pid):
-    post=get_object_or_404(Post,pk=pid)
+    now=timezone.now()
+    post1=Post.objects.filter(status=1)
+    post2=post1.filter(published_date__lte=now)
+    post=get_object_or_404(post2,pk=pid)
     post.counted_view += 1
     post.save()
     context = {'post':post}
