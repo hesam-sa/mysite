@@ -23,7 +23,7 @@ class Post(models.Model):
     
     class Meta:
         # verbose_name = 'ok'
-        ordering = ['-created_date']
+        ordering = ['created_date']
 
     def __str__(self):
-        return "self.title"
+        return self.title

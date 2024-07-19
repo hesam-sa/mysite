@@ -9,6 +9,6 @@ urlpatterns = [
     path('',blog_view,name='index'),
     path('<int:pid>',blog_single,name='single'),
     # path('test',test,name='test'),
-    # path('post-<int:pid>',test3,name= 'test2')
+    # path('post-<int:pid>',test,name= 'test')
    
 ]
