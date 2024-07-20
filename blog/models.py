@@ -32,17 +32,15 @@ class Post(models.Model):
         ordering = ['created_date']
 
     def __str__(self):
-        return self.content
+        return self.name 
     
     def snippets(self):
         return self.content[:100] +'...'
     
-    register = template.Library()
-    @register.filter
-    def truncate_chars(self, max_length=100):
-        if len(self.content) > max_length:
-            truncd_val = self.content[:max_length]
-            if not len(self.content) == max_length+1 and self.content[max_length+1] != " ":
-                truncd_val = truncd_val[:truncd_val.rfind(" ")]
-            return truncd_val + "..."
-        return self.content
+    
+    def count_words(self):
+        words = self.content.split()
+        if len(words) > 20:
+            return ' '.join(words[:20]) + '...'
+        else: 
+            return self.content

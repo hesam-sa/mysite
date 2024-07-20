@@ -154,7 +154,11 @@
 								
 							</a>
 							<p class="excert">
-								{{post.truncate_chars}}
+								<h3># with function:</h3>
+								{{post.count_words}}
+
+								<h3># template tag:</h3>
+								{{post.content|truncatewords:20}}
 							</p>
 							<a href="{% url 'blog:single' pid=post.id %}" class="primary-btn">View More</a>
 						</div>
