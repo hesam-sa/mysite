@@ -1,5 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.safestring import SafeString
+from django.template.defaultfilters import stringfilter
+from django import template
+
+
+
 
 # Create your models here.
 class Category(models.Model):
@@ -26,4 +32,17 @@ class Post(models.Model):
         ordering = ['created_date']
 
     def __str__(self):
-        return self.title
+        return self.content
+    
+    def snippets(self):
+        return self.content[:100] +'...'
+    
+    register = template.Library()
+    @register.filter
+    def truncate_chars(self, max_length=100):
+        if len(self.content) > max_length:
+            truncd_val = self.content[:max_length]
+            if not len(self.content) == max_length+1 and self.content[max_length+1] != " ":
+                truncd_val = truncd_val[:truncd_val.rfind(" ")]
+            return truncd_val + "..."
+        return self.content

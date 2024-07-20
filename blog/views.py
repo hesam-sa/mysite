@@ -20,16 +20,16 @@ def blog_single(request,pid):
     now=timezone.now()
     qs=Post.objects.filter(published_date__lte=now,status=1).order_by("pk")
     post=get_object_or_404(Post,pk=pid,published_date__lte=now,status=1)
-    first=qs.first()
+    first= qs.first()
     last = qs.last()
     next = next_in_order(post,qs=qs)
     if next:
         nx=next
-    else: nx=first
+    else: nx=post
     prev = prev_in_order(post,qs=qs)
     if prev:
         pr=prev
-    else: pr=last
+    else: pr=post
     context = {'post':post,'next':nx,'prev':pr}
     return render(request,'blog/blog-single.html',context)
     
