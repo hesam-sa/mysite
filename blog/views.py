@@ -33,3 +33,5 @@ def blog_single(request,pid):
     context = {'post':post,'next':nx,'prev':pr}
     return render(request,'blog/blog-single.html',context)
     
+def test(request):
+    return render(request,'test.html')
