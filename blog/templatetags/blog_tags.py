@@ -1,5 +1,6 @@
 from django import template
 from blog.models import Post
+from django.utils import timezone
 
 register = template.Library()
 
@@ -12,7 +13,8 @@ def function():
 def snppets(value,arg=20):
     return value[:arg] + '...'
 
-@register.inclusion_tag('popularpost.html')
-def popularposts():
-    posts = Post.objects.filter(status=1).order_by('-published_date')[:2]
+@register.inclusion_tag('blog/blog-popularposts.html')
+def latestposts():
+    now=timezone.now()
+    posts = Post.objects.filter(status=1,published_date__lte=now).order_by('published_date')[:5]
     return {'posts':posts}
