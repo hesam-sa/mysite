@@ -1,5 +1,5 @@
 from django import template
-from blog.models import Post
+from blog.models import Post,Category
 from django.utils import timezone
 
 register = template.Library()
@@ -18,3 +18,13 @@ def latestposts():
     now=timezone.now()
     posts = Post.objects.filter(status=1,published_date__lte=now).order_by('published_date')[:5]
     return {'posts':posts}
+
+@register.inclusion_tag('blog/blog-post-categories.html')
+def postcategories():
+    now=timezone.now()
+    posts = Post.objects.filter(status=1,published_date__lte=now)
+    categories = Category.objects.all()
+    cat_dict ={}
+    for name in categories:
+        cat_dict[name]=posts.filter(category=name).count()
+    return {'categories':cat_dict}

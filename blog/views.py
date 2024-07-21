@@ -9,11 +9,12 @@ from next_prev import next_in_order, prev_in_order
 
 
 
-def blog_view(request):
+def blog_view(request,cat_name=None):
     now=timezone.now()
-    post1=Post.objects.filter(status=1)
-    post=post1.filter(published_date__lte=now)
-    context = {'post':post}
+    posts=Post.objects.filter(status=1,published_date__lte=now)
+    if cat_name:
+        posts=posts.filter(category__name=cat_name)
+    context = {'posts':posts}
     return render(request,'blog/blog-home.html',context)
 
 def blog_single(request,pid):
@@ -35,3 +36,10 @@ def blog_single(request,pid):
     
 def test(request):
     return render(request,'test.html')
+
+# def blog_category(request,cat_name):
+#     now=timezone.now()
+#     posts=Post.objects.filter(status=1,published_date__lte=now)
+#     posts=posts.filter(category__name=cat_name)
+#     context={"posts":posts}
+#     return render(request,'blog/blog-home.html',context)
