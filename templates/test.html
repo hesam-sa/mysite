@@ -9,8 +9,9 @@
 <body>
     {% posts as totalpost %}
     {% for post in totalpost %}
-    <p>{{post.title}}</p>
+    <p>{{post.content|snppets:100}}</p>
     {% endfor %}
-    
+    {% popularposts %}
+
 </body>
 </html>
