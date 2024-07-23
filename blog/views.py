@@ -16,7 +16,7 @@ def blog_view(request,cat_name=None,author_username=None):
         posts=posts.filter(category__name=cat_name)
     if author_username:
         posts=posts.filter(author__username=author_username)
-    posts=Paginator(posts,1)
+    posts=Paginator(posts,3)
     try:
         page_number=request.GET.get('page')
         posts=posts.get_page(page_number)
@@ -31,8 +31,8 @@ def blog_single(request,pid):
     now=timezone.now()
     qs=Post.objects.filter(published_date__lte=now,status=1).order_by("pk")
     post=get_object_or_404(Post,pk=pid,published_date__lte=now,status=1)
-    first= qs.first()
-    last = qs.last()
+    post.counted_view += 1
+    post.save()
     next = next_in_order(post,qs=qs)
     if next:
         nx=next
