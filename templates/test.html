@@ -7,12 +7,18 @@
     <title>Document</title>
 </head>
 <body>
-    {% posts as totalpost %}
-    {% for post in totalpost %}
-    <p>{{post.content|snppets:100}}</p>
-    {% endfor %}
-    
-    {% latestposts %}
+    <form actoin="{% url 'blog:test' %}" method="post">
+        {% csrf_token %}
+        <label>name</label>
+        <input name='name' type="text"><br><br>
+        <label>email:</label>
+        <input name='email' type="text"><br><br>
+        <label>subject:</label>
+        <input name='subject' type="text"><br><br>
+        <label>message:</label>
+        <input name='message' type="text"><br><br>
+        <button type="submit">submit</button>
+    </form>
 
 </body>
 </html>
