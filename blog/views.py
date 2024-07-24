@@ -8,6 +8,7 @@ from django.utils import timezone
 from next_prev import next_in_order, prev_in_order
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from website.models import contact
+from website.forms import NameForm,ContactForm
 
 
 def blog_view(request,cat_name=None,author_username=None):
@@ -47,17 +48,15 @@ def blog_single(request,pid):
     
 def test(request):
     if request.method == 'POST':
-        c = contact()
-        name = request.POST.get('name')
-        Email = request.POST.get('email')
-        subject = request.POST.get('subject')
-        message = request.POST.get('message')
-        c.name = name
-        c.email = Email
-        c.subject = subject
-        c.message = message
-        c.save()
-    return render(request,'test.html')
+            form = ContactForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponse('done')
+            else:
+                return HttpResponse('not valid')
+    form=ContactForm()            
+    context = {'form':form}        
+    return render(request,'test.html',context)
 
 def blog_search(request):
     now=timezone.now()
