@@ -3,6 +3,7 @@ from .forms import ContactForm,NewsForm
 
 # Create your views here.
 from django.http import HttpResponse,JsonResponse,HttpResponseRedirect
+from django.contrib import messages
 
 def index_view(request):
     return render(request,'website/index.html')
@@ -15,6 +16,9 @@ def contact_view(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.add_message(request,messages.SUCCESS,'Your Ticket Submitted Successfully')
+        else:
+            messages.add_message(request,messages.ERROR,'Your Ticket Not Submitted ')
                         
     form=ContactForm()
     return render(request,'website/contact.html')
