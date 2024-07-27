@@ -14,6 +14,8 @@ class ContactForm(forms.ModelForm):
         model = contact
         fields ='__all__'
 
+   
+
 class NewsForm(forms.ModelForm):
 
     class Meta:

@@ -1,4 +1,11 @@
 {% load static %}
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            alert('{{ message }}');
+        </script>   
+    {% endfor %}
+{% endif %}
 <header id="header">
     <div class="header-top">
         <div class="container">

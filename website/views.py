@@ -15,7 +15,10 @@ def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+            instance.name = 'anonymous'
+            instance.save()
+            
             messages.add_message(request,messages.SUCCESS,'Your Ticket Submitted Successfully')
         else:
             messages.add_message(request,messages.ERROR,'Your Ticket Not Submitted ')

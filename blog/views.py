@@ -50,7 +50,9 @@ def test(request):
     if request.method == 'POST':
             form = ContactForm(request.POST)
             if form.is_valid():
-                form.save()
+                instance = form.save(commit=False)
+                instance.name = 'anonymous'
+                instance.save()
                 return HttpResponse('done')
             else:
                 return HttpResponse('not valid')
