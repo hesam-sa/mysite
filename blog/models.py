@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.safestring import SafeString
 from django.template.defaultfilters import stringfilter
 from django import template
-
+from django.urls import reverse
 
 
 
@@ -44,3 +44,7 @@ class Post(models.Model):
             return ' '.join(words[:20]) + '...'
         else: 
             return self.content
+    
+    def get_absolute_url(self):
+        return reverse('blog:single',kwargs={'pid':self.id})
+        

@@ -40,9 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
-    'blog'
+    'django.contrib.sites',
+    
+    'blog',
+    'django.contrib.humanize',
+    'django.contrib.sitemaps',
+   
+
     
 ]
+
+SITE_ID = 2
 
 DJANGO_ICONS = {
     "ICONS": {
