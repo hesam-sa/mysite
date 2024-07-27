@@ -45,12 +45,16 @@ INSTALLED_APPS = [
     'blog',
     'django.contrib.humanize',
     'django.contrib.sitemaps',
-   
+    'robots',
+    "debug_toolbar"
 
     
 ]
 
 SITE_ID = 2
+
+ROBOTS_USE_HOST=True
+ROBOTS_USE_SITEMAP=True
 
 DJANGO_ICONS = {
     "ICONS": {
@@ -66,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware"
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -152,3 +157,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
