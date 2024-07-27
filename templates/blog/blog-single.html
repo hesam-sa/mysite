@@ -44,9 +44,9 @@
 					<div class="row d-flex align-items-center justify-content-center">
 						<div class="about-content col-lg-12">
 							<h1 class="text-white">
-								{{post.title}}				
+								{{posts.title}}				
 							</h1>	
-							<p class="text-white link-nav"><a href="{% url 'website:index' %}">Home </a>  <span class="lnr lnr-arrow-right"></span><a href="{% url 'blog:index' %}">Blog </a> <span class="lnr lnr-arrow-right"></span> <a href="{% url 'blog:single' pid=post.id %}">{{post.title}}</a></p>
+							<p class="text-white link-nav"><a href="{% url 'website:index' %}">Home </a>  <span class="lnr lnr-arrow-right"></span><a href="{% url 'blog:index' %}">Blog </a> <span class="lnr lnr-arrow-right"></span> <a href="{% url 'blog:single' pid=posts.id %}">{{posts.title}}</a></p>
 						</div>	
 					</div>
 				</div>
@@ -61,20 +61,20 @@
 							<div class="single-post row">
 								<div class="col-lg-12">
 									<div class="feature-img">
-										<img class="img-fluid" src={{post.image.url}} alt="">
+										<img class="img-fluid" src={{posts.image.url}} alt="">
 									</div>									
 								</div>
 								<div class="col-lg-3  col-md-3 meta-details">
 									<ul class="tags">
-										{% for cat in post.category.all %}
+										{% for cat in posts.category.all %}
 										<li><a href="{% url 'blog:category' cat_name=cat.name %}">{{cat}}</a></li>{% if not forloop.last %},{% endif %}
 										{% endfor %}
 										
 									</ul>
 									<div class="user-details row">
-										<p class="user-name col-lg-12 col-md-12 col-6"><a href="{% url 'blog:author' author_username=post.author.username %}">{{post.author.get_full_name}}</a> <span class="lnr lnr-user"></span></p>
-										<p class="date col-lg-12 col-md-12 col-6"><a href="#">{{post.published_date|date:'m/d/y'}}</a> <span class="lnr lnr-calendar-full"></span></p>
-										<p class="view col-lg-12 col-md-12 col-6"><a href="#">{{post.counted_view}} Views</a> <span class="lnr lnr-eye"></span></p>
+										<p class="user-name col-lg-12 col-md-12 col-6"><a href="{% url 'blog:author' author_username=posts.author.username %}">{{posts.author.get_full_name}}</a> <span class="lnr lnr-user"></span></p>
+										<p class="date col-lg-12 col-md-12 col-6"><a href="#">{{posts.published_date|date:'m/d/y'}}</a> <span class="lnr lnr-calendar-full"></span></p>
+										<p class="view col-lg-12 col-md-12 col-6"><a href="#">{{posts.counted_view}} Views</a> <span class="lnr lnr-eye"></span></p>
 										<p class="comments col-lg-12 col-md-12 col-6"><a href="#">06 Comments</a> <span class="lnr lnr-bubble"></span></p>
 										<ul class="social-links col-lg-12 col-md-12 col-6">
 											<li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -85,9 +85,9 @@
 									</div>
 								</div>
 								<div class="col-lg-9 col-md-9">
-									<h3 class="mt-20 mb-20">{{post.title}}</h3>
+									<h3 class="mt-20 mb-20">{{posts.title}}</h3>
 									<p class="excert">
-										{{post.content}}
+										{{posts.content}}
 									</p>
 							
 								</div>
@@ -95,7 +95,7 @@
 							</div>
 							<div class="navigation-area">
 								<div class="row">
-									{% if not prev.id == post.id %}
+									{% if not prev.id == posts.id %}
 									<div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
 										<div class="thumb">
 											<a href="{% url 'blog:single' pid=prev.id %}"><img class="img-fluid" src="{{prev.image.url}}" alt=""></a>
@@ -104,13 +104,13 @@
 											<a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
 										</div>
 										<div class="detials">
-											<p>Prev Post</p>
+											<p>Prev posts</p>
 											<p>id:{{prev.id}}</p>
 											<a href="{% url 'blog:single' pid=prev.id %}"><h4>{{prev.title}}</h4></a>
 										</div>
 									</div>
 									{% endif %}
-									{% if not next.id == post.id %}
+									{% if not next.id == posts.id %}
 									<div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center ">
 										<div class="detials">
 											
@@ -282,23 +282,7 @@
 										You can unsubscribe at any time
 									</p>								
 								</div>
-								<div class="single-sidebar-widget tag-cloud-widget">
-									<h4 class="tagcloud-title">Tag Clouds</h4>
-									<ul>
-										<li><a href="#">Technology</a></li>
-										<li><a href="#">Fashion</a></li>
-										<li><a href="#">Architecture</a></li>
-										<li><a href="#">Fashion</a></li>
-										<li><a href="#">Food</a></li>
-										<li><a href="#">Technology</a></li>
-										<li><a href="#">Lifestyle</a></li>
-										<li><a href="#">Art</a></li>
-										<li><a href="#">Adventure</a></li>
-										<li><a href="#">Food</a></li>
-										<li><a href="#">Lifestyle</a></li>
-										<li><a href="#">Adventure</a></li>
-									</ul>
-								</div>								
+								{% include 'blog/blog-cloudtags.html' %}							
 							</div>
 						</div>
 					</div>

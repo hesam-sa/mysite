@@ -4,6 +4,7 @@ from django.utils.safestring import SafeString
 from django.template.defaultfilters import stringfilter
 from django import template
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 
 
@@ -19,7 +20,7 @@ class Post(models.Model):
     author = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     title = models.CharField(max_length=255)
     content = models.TextField()
-    # tag
+    tags = TaggableManager()
     category = models.ManyToManyField(Category)
     counted_view = models.IntegerField(default=0)
     status = models.BooleanField(default=False)

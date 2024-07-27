@@ -11,13 +11,15 @@ from website.models import contact
 from website.forms import NameForm,ContactForm
 
 
-def blog_view(request,cat_name=None,author_username=None):
+def blog_view(request,cat_name=None,author_username=None,tag_name=None):
     now=timezone.now()
     posts=Post.objects.filter(status=1,published_date__lte=now)
     if cat_name:
         posts=posts.filter(category__name=cat_name)
     if author_username:
         posts=posts.filter(author__username=author_username)
+    if tag_name:
+        posts=posts.filter(tags__name__in=[tag_name])    
     posts=Paginator(posts,3)
     try:
         page_number=request.GET.get('page')
@@ -43,7 +45,7 @@ def blog_single(request,pid):
     if prev:
         pr=prev
     else: pr=post
-    context = {'post':post,'next':nx,'prev':pr}
+    context = {'posts':post,'next':nx,'prev':pr}
     return render(request,'blog/blog-single.html',context)
     
 def test(request):

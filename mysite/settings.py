@@ -41,12 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
     'django.contrib.sites',
-    
     'blog',
     'django.contrib.humanize',
     'django.contrib.sitemaps',
     'robots',
-    "debug_toolbar"
+    "debug_toolbar",
+    'taggit'
 
     
 ]
