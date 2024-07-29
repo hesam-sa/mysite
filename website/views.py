@@ -24,7 +24,8 @@ def contact_view(request):
             messages.add_message(request,messages.ERROR,'Your Ticket Not Submitted ')
                         
     form=ContactForm()
-    return render(request,'website/contact.html')
+    context = {'form':form}
+    return render(request,'website/contact.html',context)
 
 def newsletter_view(request):
     if request.method == 'POST':
