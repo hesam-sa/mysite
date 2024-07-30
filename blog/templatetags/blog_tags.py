@@ -1,5 +1,5 @@
 from django import template
-from blog.models import Post,Category
+from blog.models import Post,Category,Comment
 from django.utils import timezone
 
 register = template.Library()
@@ -8,6 +8,11 @@ register = template.Library()
 def function():
     posts = Post.objects.filter(status=1)
     return  posts
+
+@register.simple_tag(name='comments_count')
+def function(pid):
+    posts= Post.objects.get(pk=pid)
+    return Comment.objects.filter(post=posts.id,approved = True).count()
 
 @register.filter
 def snppets(value,arg=20):

@@ -3,12 +3,14 @@ from django.shortcuts import render,get_object_or_404
 # Create your views here.
 
 from django.http import HttpResponse,JsonResponse
-from blog.models import Post
+from blog.models import Post,Comment
 from django.utils import timezone
 from next_prev import next_in_order, prev_in_order
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from website.models import contact
 from website.forms import NameForm,ContactForm
+from blog.forms import CommentForm
+from django.contrib import messages
 
 
 def blog_view(request,cat_name=None,author_username=None,tag_name=None):
@@ -32,6 +34,13 @@ def blog_view(request,cat_name=None,author_username=None,tag_name=None):
     return render(request,'blog/blog-home.html',context)
 
 def blog_single(request,pid):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request,messages.SUCCESS,'Your Comment Submitted Successfully')
+        else:
+            messages.add_message(request,messages.ERROR,'Your Comment Not Submitted ')
     now=timezone.now()
     qs=Post.objects.filter(published_date__lte=now,status=1).order_by("pk")
     post=get_object_or_404(Post,pk=pid,published_date__lte=now,status=1)
@@ -45,7 +54,9 @@ def blog_single(request,pid):
     if prev:
         pr=prev
     else: pr=post
-    context = {'posts':post,'next':nx,'prev':pr}
+    comments = Comment.objects.filter(post=post.id,approved = True).order_by('-created_date')
+    form=CommentForm()
+    context = {'posts':post,'next':nx,'prev':pr,'comments':comments,'form':form}
     return render(request,'blog/blog-single.html',context)
     
 def test(request):
