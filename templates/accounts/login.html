@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <P>user is authenticated as mr {{user.get_full_name}}</P>
+    {% else %}
+    <P>user is not authenticated</P>
+    {% endif %}
+</body>
+</html>
