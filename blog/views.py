@@ -58,6 +58,7 @@ def blog_single(request,pid):
     form=CommentForm()
     context = {'posts':post,'next':nx,'prev':pr,'comments':comments,'form':form}
     return render(request,'blog/blog-single.html',context)
+
     
 def test(request):
     if request.method == 'POST':
