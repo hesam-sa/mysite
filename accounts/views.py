@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login,logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 
@@ -31,4 +32,15 @@ def logout_view(request):
 
 
 def signup_view(request):
-    return render(request,'accounts/signup.html')
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/accounts/login')
+            messages.add_message(request,messages.SUCCESS,'New User Submitted Successfully')
+        else:
+            messages.add_message(request,messages.ERROR,'New User Not Submitted ')
+            
+    form = UserCreationForm()
+    context = {'form': form}
+    return render(request,'accounts/signup.html',context)

@@ -1,7 +1,4 @@
-from django.shortcuts import render,get_object_or_404
-
-# Create your views here.
-
+from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse,JsonResponse
 from blog.models import Post,Comment
 from django.utils import timezone
@@ -13,6 +10,7 @@ from blog.forms import CommentForm
 from django.contrib import messages
 
 
+# Create your views here.
 def blog_view(request,cat_name=None,author_username=None,tag_name=None):
     now=timezone.now()
     posts=Post.objects.filter(status=1,published_date__lte=now)
@@ -44,20 +42,39 @@ def blog_single(request,pid):
     now=timezone.now()
     qs=Post.objects.filter(published_date__lte=now,status=1).order_by("pk")
     post=get_object_or_404(Post,pk=pid,published_date__lte=now,status=1)
-    post.counted_view += 1
-    post.save()
-    next = next_in_order(post,qs=qs)
-    if next:
-        nx=next
-    else: nx=post
-    prev = prev_in_order(post,qs=qs)
-    if prev:
-        pr=prev
-    else: pr=post
-    comments = Comment.objects.filter(post=post.id,approved = True).order_by('-created_date')
-    form=CommentForm()
-    context = {'posts':post,'next':nx,'prev':pr,'comments':comments,'form':form}
-    return render(request,'blog/blog-single.html',context)
+    if not post.login_required:
+        post.counted_view += 1
+        post.save()
+        next = next_in_order(post,qs=qs)
+        if next:
+            nx=next
+        else: nx=post
+        prev = prev_in_order(post,qs=qs)
+        if prev:
+            pr=prev
+        else: pr=post
+        comments = Comment.objects.filter(post=post.id,approved = True).order_by('-created_date')
+        form=CommentForm()
+        context = {'posts':post,'next':nx,'prev':pr,'comments':comments,'form':form}
+        return render(request,'blog/blog-single.html',context)
+    else:
+        if request.user.is_authenticated:
+            post.counted_view += 1
+            post.save()
+            next = next_in_order(post,qs=qs)
+            if next:
+                nx=next
+            else: nx=post
+            prev = prev_in_order(post,qs=qs)
+            if prev:
+                pr=prev
+            else: pr=post
+            comments = Comment.objects.filter(post=post.id,approved = True).order_by('-created_date')
+            form=CommentForm()
+            context = {'posts':post,'next':nx,'prev':pr,'comments':comments,'form':form}
+            return render(request,'blog/blog-single.html',context)
+        else:
+            return redirect('/accounts/login')
 
     
 def test(request):

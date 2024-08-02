@@ -3,243 +3,280 @@
 {% load blog_tags %}
 {% block content %}
 <!DOCTYPE html>
-	<html lang="zxx" class="no-js">
-	<head>
-		<!-- Mobile Specific Meta -->
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<!-- Favicon-->
-		<link rel="shortcut icon" href="{% static 'img/fav.png' %}">
-		<!-- Author Meta -->
-		<meta name="author" content="colorlib">
-		<!-- Meta Description -->
-		<meta name="description" content="">
-		<!-- Meta Keyword -->
-		<meta name="keywords" content="">
-		<!-- meta character set -->
-		<meta charset="UTF-8">
-		<!-- Site Title -->
-		<title>Travel</title>
+<html lang="zxx" class="no-js">
 
-		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
-			<!--
+<head>
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Favicon-->
+	<link rel="shortcut icon" href="{% static 'img/fav.png' %}">
+	<!-- Author Meta -->
+	<meta name="author" content="colorlib">
+	<!-- Meta Description -->
+	<meta name="description" content="">
+	<!-- Meta Keyword -->
+	<meta name="keywords" content="">
+	<!-- meta character set -->
+	<meta charset="UTF-8">
+	<!-- Site Title -->
+	<title>Travel</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+	<!--
 			CSS
 			============================================= -->
-			<link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
-			<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-			<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-			<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
-			<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">				
-			<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">							
-			<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
-			<link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">				
-			<link rel="stylesheet" href="{% static 'css/main.css' %}">
-		</head>
-		<body>	
+	<link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+	<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+	<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+	<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
 
-		  
-			<!-- start banner Area -->
-			<section class="relative about-banner">	
-				<div class="overlay overlay-bg"></div>
-				<div class="container">				
-					<div class="row d-flex align-items-center justify-content-center">
-						<div class="about-content col-lg-12">
-							<h1 class="text-white">
-								{{posts.title}}				
-							</h1>	
-							<p class="text-white link-nav"><a href="{% url 'website:index' %}">Home </a>  <span class="lnr lnr-arrow-right"></span><a href="{% url 'blog:index' %}">Blog </a> <span class="lnr lnr-arrow-right"></span> <a href="{% url 'blog:single' pid=posts.id %}">{{posts.title}}</a></p>
-						</div>	
+<body>
+
+
+	<!-- start banner Area -->
+	<section class="relative about-banner">
+		<div class="overlay overlay-bg"></div>
+		<div class="container">
+			<div class="row d-flex align-items-center justify-content-center">
+				<div class="about-content col-lg-12">
+					<h1 class="text-white">
+						{{posts.title}}
+					</h1>
+					<p class="text-white link-nav"><a href="{% url 'website:index' %}">Home </a> <span
+							class="lnr lnr-arrow-right"></span><a href="{% url 'blog:index' %}">Blog </a> <span
+							class="lnr lnr-arrow-right"></span> <a
+							href="{% url 'blog:single' pid=posts.id %}">{{posts.title}}</a></p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End banner Area -->
+
+	<!-- Start post-content Area -->
+	<section class="post-content-area single-post-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 posts-list">
+					<div class="single-post row">
+						<div class="col-lg-12">
+							<div class="feature-img">
+								<img class="img-fluid" src={{posts.image.url}} alt="">
+							</div>
+						</div>
+						<div class="col-lg-3  col-md-3 meta-details">
+							<ul class="tags">
+								{% for cat in posts.category.all %}
+								<li><a href="{% url 'blog:category' cat_name=cat.name %}">{{cat}}</a></li>{% if not forloop.last %},{% endif %}
+								{% endfor %}
+
+							</ul>
+							<div class="user-details row">
+								<p class="user-name col-lg-12 col-md-12 col-6"><a
+										href="{% url 'blog:author' author_username=posts.author.username %}">{{posts.author.get_full_name}}</a>
+									<span class="lnr lnr-user"></span></p>
+								<p class="date col-lg-12 col-md-12 col-6"><a
+										href="#">{{posts.published_date|date:'m/d/y'}}</a> <span
+										class="lnr lnr-calendar-full"></span></p>
+								<p class="view col-lg-12 col-md-12 col-6"><a href="#">{{posts.counted_view}} Views</a>
+									<span class="lnr lnr-eye"></span></p>
+								<p class="comments col-lg-12 col-md-12 col-6"><a href="#">06 Comments</a> <span
+										class="lnr lnr-bubble"></span></p>
+								<ul class="social-links col-lg-12 col-md-12 col-6">
+									<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="#"><i class="fa fa-github"></i></a></li>
+									<li><a href="#"><i class="fa fa-behance"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-lg-9 col-md-9">
+							<h3 class="mt-20 mb-20">{{posts.title}}</h3>
+							<p class="excert">
+								{{posts.content|safe}}
+							</p>
+
+						</div>
+
+					</div>
+					<div class="navigation-area">
+						<div class="row">
+							{% if not prev.id == posts.id %}
+							<div
+								class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+								<div class="thumb">
+									<a href="{% url 'blog:single' pid=prev.id %}"><img class="img-fluid"
+											src="{{prev.image.url}}" alt=""></a>
+								</div>
+								<div class="arrow">
+									<a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
+								</div>
+								<div class="detials">
+									<p>Prev posts</p>
+									<p>id:{{prev.id}}</p>
+									<a href="{% url 'blog:single' pid=prev.id %}">
+										<h4>{{prev.title}}</h4>
+									</a>
+								</div>
+							</div>
+							{% endif %}
+							{% if not next.id == posts.id %}
+							<div
+								class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center ">
+								<div class="detials">
+
+									<p>next post</p>
+
+									<p>id:{{next.id}}</p>
+
+									<a href="{% url 'blog:single' pid=next.id %}">
+										<h4>{{next.title}}</h4>
+									</a>
+								</div>
+								<div class="arrow">
+									<a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
+								</div>
+								<div class="thumb">
+									<a href="{% url 'blog:single' pid=next.id %}"><img class="img-fluid"
+											src={{next.image.url}} align="right"></a>
+								</div>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+
+					<div class="comments-area">
+						<h4>{{comments|length}} Comments</h4>
+						{% for comment in comments %}
+						<div class="comment-list">
+							<div class="single-comment justify-content-between d-flex">
+								<div class="user justify-content-between d-flex">
+									<div class="thumb">
+										<img src="{% static 'img/blog/c1.jpg' %}" alt="">
+									</div>
+									<div class="desc">
+										<h5><a href="#">{{comment.name}}</a></h5>
+										<p class="date">{{comment.created_date}} </p>
+										<p class="comment">
+											{{comment.message}}
+										</p>
+									</div>
+								</div>
+								<div class="reply-btn">
+									<a href="" class="btn-reply text-uppercase">reply</a>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					<div class="comment-form">
+						<h4>Leave a Comment</h4>
+						<form method="post" action="{% url 'blog:single' pid=posts.id %}">
+							{% csrf_token %}
+							<div class="form-group form-inline">
+								<input type="hidden" name="post" value="{{posts.id}}">
+								{% if user.is_authenticated %}
+								
+									<input type="hidden" name="name" value="{{user.username}}">
+									<input type="hidden" name="email" value="{{user.email}}">
+								
+								{% else %}
+								<div class="form-group col-lg-6 col-md-12 name">
+									<input type="text" class="form-control" name="name" placeholder="Enter Name"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
+								</div>
+								<div class="form-group col-lg-6 col-md-12 email">
+									<input type="email" class="form-control" name="email"
+										placeholder="Enter email address" onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Enter email address'">
+								</div>
+								{% endif %}
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" name="subject" placeholder="Subject"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'">
+							</div>
+							<div class="form-group">
+								<textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
+									required=""></textarea>
+							</div>
+							
+							<button type="submit" href="#" class="primary-btn text-uppercase">Post Comment</button>
+						</form>
 					</div>
 				</div>
-			</section>
-			<!-- End banner Area -->					  
-			
-			<!-- Start post-content Area -->
-			<section class="post-content-area single-post-area">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-8 posts-list">
-							<div class="single-post row">
-								<div class="col-lg-12">
-									<div class="feature-img">
-										<img class="img-fluid" src={{posts.image.url}} alt="">
-									</div>									
-								</div>
-								<div class="col-lg-3  col-md-3 meta-details">
-									<ul class="tags">
-										{% for cat in posts.category.all %}
-										<li><a href="{% url 'blog:category' cat_name=cat.name %}">{{cat}}</a></li>{% if not forloop.last %},{% endif %}
-										{% endfor %}
-										
-									</ul>
-									<div class="user-details row">
-										<p class="user-name col-lg-12 col-md-12 col-6"><a href="{% url 'blog:author' author_username=posts.author.username %}">{{posts.author.get_full_name}}</a> <span class="lnr lnr-user"></span></p>
-										<p class="date col-lg-12 col-md-12 col-6"><a href="#">{{posts.published_date|date:'m/d/y'}}</a> <span class="lnr lnr-calendar-full"></span></p>
-										<p class="view col-lg-12 col-md-12 col-6"><a href="#">{{posts.counted_view}} Views</a> <span class="lnr lnr-eye"></span></p>
-										<p class="comments col-lg-12 col-md-12 col-6"><a href="#">06 Comments</a> <span class="lnr lnr-bubble"></span></p>
-										<ul class="social-links col-lg-12 col-md-12 col-6">
-											<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-											<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-											<li><a href="#"><i class="fa fa-github"></i></a></li>
-											<li><a href="#"><i class="fa fa-behance"></i></a></li>
-										</ul>																				
-									</div>
-								</div>
-								<div class="col-lg-9 col-md-9">
-									<h3 class="mt-20 mb-20">{{posts.title}}</h3>
-									<p class="excert">
-										{{posts.content|safe}}
-									</p>
-							
-								</div>
-							
-							</div>
-							<div class="navigation-area">
-								<div class="row">
-									{% if not prev.id == posts.id %}
-									<div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
-										<div class="thumb">
-											<a href="{% url 'blog:single' pid=prev.id %}"><img class="img-fluid" src="{{prev.image.url}}" alt=""></a>
-										</div>
-										<div class="arrow">
-											<a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
-										</div>
-										<div class="detials">
-											<p>Prev posts</p>
-											<p>id:{{prev.id}}</p>
-											<a href="{% url 'blog:single' pid=prev.id %}"><h4>{{prev.title}}</h4></a>
-										</div>
-									</div>
-									{% endif %}
-									{% if not next.id == posts.id %}
-									<div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center ">
-										<div class="detials">
-											
-											<p>next post</p>
-											
-											<p>id:{{next.id}}</p>
-											
-											<a href="{% url 'blog:single' pid=next.id %}"><h4>{{next.title}}</h4></a>
-										</div>
-										<div class="arrow">
-											<a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
-										</div>
-										<div class="thumb">
-											<a href="{% url 'blog:single' pid=next.id %}"><img class="img-fluid" src={{next.image.url}}  align="right"></a>
-										</div>										
-									</div>		
-									{% endif %}							
-								</div>
-							</div>
-							
-							<div class="comments-area">
-								<h4>{{comments|length}} Comments</h4>
-								{% for comment in comments %}
-								<div class="comment-list">
-                                    <div class="single-comment justify-content-between d-flex">
-                                        <div class="user justify-content-between d-flex">
-                                            <div class="thumb">
-                                                <img src="{% static 'img/blog/c1.jpg' %}" alt="">
-                                            </div>
-                                            <div class="desc">
-                                                <h5><a href="#">{{comment.name}}</a></h5>
-                                                <p class="date">{{comment.created_date}} </p>
-                                                <p class="comment">
-                                                    {{comment.message}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="reply-btn">
-                                               <a href="" class="btn-reply text-uppercase">reply</a> 
-                                        </div>
-                                    </div>
-                                </div>	
-								{% endfor %}                				
-							</div>
-							<div class="comment-form">
-								<h4>Leave a Comment</h4>
-								<form method="post" action="{% url 'blog:single' pid=posts.id %}">
-									{% csrf_token %}
-									<div class="form-group form-inline">
-										<input type="hidden" name="post" value="{{posts.id}}">	
-									  <div class="form-group col-lg-6 col-md-12 name">
-									    <input type="text" class="form-control" name="name" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
-									  </div>
-									  <div class="form-group col-lg-6 col-md-12 email">
-									    <input type="email" class="form-control" name="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
-									  </div>										
-									</div>
-									<div class="form-group">
-										<input type="text" class="form-control" name="subject" placeholder="Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'">
-									</div>
-									<div class="form-group">
-										<textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
-									</div>
-									<button type="submit" href="#" class="primary-btn text-uppercase">Post Comment</button>	
-								</form>
-							</div>
-						</div>
-						<div class="col-lg-4 sidebar-widgets">
-							<div class="widget-wrap">
+				<div class="col-lg-4 sidebar-widgets">
+					<div class="widget-wrap">
 
-								{% include 'blog/blog-search.html' %}
-								
-								{% include 'blog/blog-writer.html' %}
-								{% latestposts %}
-								<div class="single-sidebar-widget ads-widget">
-									<a href="#"><img class="img-fluid" src="{% static 'img/blog/ads-banner.jpg' %}" alt=""></a>
-								</div>
-								{% postcategories %}
-								<div class="single-sidebar-widget newsletter-widget">
-									<h4 class="newsletter-title">Newsletter</h4>
-									<p>
-										Here, I focus on a range of items and features that we use in life without
-										giving them a second thought.
-									</p>
-									<div class="form-group d-flex flex-row">
-									
-										
-									   <div class="col-autos">
-									      <div class="input-group">
-									        <div class="input-group-prepend">
-									          <div class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i>
+						{% include 'blog/blog-search.html' %}
+
+						{% include 'blog/blog-writer.html' %}
+						{% latestposts %}
+						<div class="single-sidebar-widget ads-widget">
+							<a href="#"><img class="img-fluid" src="{% static 'img/blog/ads-banner.jpg' %}" alt=""></a>
+						</div>
+						{% postcategories %}
+						<div class="single-sidebar-widget newsletter-widget">
+							<h4 class="newsletter-title">Newsletter</h4>
+							<p>
+								Here, I focus on a range of items and features that we use in life without
+								giving them a second thought.
+							</p>
+							<div class="form-group d-flex flex-row">
+
+
+								<div class="col-autos">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text"><i class="fa fa-envelope"
+													aria-hidden="true"></i>
 											</div>
-									        </div>
-									        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'" >
-									      </div>
-									    </div>
-									    <a href="#" class="bbtns">Subcribe</a>
-									</div>	
-									<p class="text-bottom">
-										You can unsubscribe at any time
-									</p>								
+										</div>
+										<input type="text" class="form-control" id="inlineFormInputGroup"
+											placeholder="Enter email" onfocus="this.placeholder = ''"
+											onblur="this.placeholder = 'Enter email'">
+									</div>
 								</div>
-								{% include 'blog/blog-cloudtags.html' %}							
+								<a href="#" class="bbtns">Subcribe</a>
 							</div>
+							<p class="text-bottom">
+								You can unsubscribe at any time
+							</p>
 						</div>
+						{% include 'blog/blog-cloudtags.html' %}
 					</div>
-					
-				</div>	
-				
-				
-			</section>
-			<!-- End post-content Area -->
-			
+				</div>
+			</div>
+
+		</div>
 
 
-			<script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
-			<script src="{% static 'js/popper.min.js' %}"></script>
-			<script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>			
-			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>		
- 			<script src="{% static 'js/jquery-ui.js' %}"></script>					
-  			<script src="{% static 'js/easing.min.js' %}"></script>			
-			<script src="{% static 'js/hoverIntent.js' %}"></script>
-			<script src="{% static 'js/superfish.min.js' %}"></script>	
-			<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
-			<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>						
-			<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>					
-			<script src="{% static 'js/owl.carousel.min.js' %}"></script>							
-			<script src="{% static 'js/mail-script.js' %}"></script>	
-			<script src="{% static 'js/main.js' %}"></script>	
-		</body>
-	</html>
-	{% endblock %}
+	</section>
+	<!-- End post-content Area -->
+
+
+
+	<script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+	<script src="{% static 'js/jquery-ui.js' %}"></script>
+	<script src="{% static 'js/easing.min.js' %}"></script>
+	<script src="{% static 'js/hoverIntent.js' %}"></script>
+	<script src="{% static 'js/superfish.min.js' %}"></script>
+	<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/mail-script.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
+{% endblock %}
