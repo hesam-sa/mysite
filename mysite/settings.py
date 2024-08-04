@@ -176,3 +176,10 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 # Show summernote with Bootstrap4
 SUMMERNOTE_THEME = 'bs4'
 
+#smtp configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'hesam.sadat@gmail.com'
+EMAIL_HOST_PASSWORD = 'fnus kfdp twvr mmbe'

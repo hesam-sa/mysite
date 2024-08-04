@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from accounts.forms import CustomUserCreationForm
 from django.contrib.auth.models import User
+from accounts.forms import UserForm
 
 
 
@@ -37,7 +38,7 @@ def login_view(request):
         context = {'form': form}
         return render(request,'accounts/login.html',context)
     else:
-        
+        messages.add_message(request,messages.ERROR,f'You are already logged in as {request.user.username}')
         return redirect('/')
 
 @login_required(login_url='/accounts/login')
@@ -47,17 +48,33 @@ def logout_view(request):
 
 
 def signup_view(request):
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            form = CustomUserCreationForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.add_message(request,messages.SUCCESS,'New User Submitted Successfully')
+                return redirect('/accounts/login')
+                
+            else:
+                messages.add_message(request,messages.ERROR,'New User Not Submitted ')
+                return redirect('/')
+                
+        form = CustomUserCreationForm()
+        context = {'form': form}
+        return render(request,'accounts/signup.html',context)
+    else:
+        messages.add_message(request,messages.ERROR,'please log out first')
+        return redirect('/')
+
+
+def resetpass(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = UserForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.add_message(request,messages.SUCCESS,'New User Submitted Successfully')
-            return redirect('/accounts/login')
-            
-        else:
-            messages.add_message(request,messages.ERROR,'New User Not Submitted ')
-            return redirect('/')
-            
-    form = CustomUserCreationForm()
-    context = {'form': form}
-    return render(request,'accounts/signup.html',context)
+            print('1')
+            email=form.cleaned_data.get('email')
+            print(email)
+    form =UserForm()
+    context={'form':form}
+    return render(request,'accounts/resetpass.html',context)
