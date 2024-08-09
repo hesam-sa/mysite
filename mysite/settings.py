@@ -40,12 +40,19 @@ INSTALLED_APPS = [
     'taggit',
     'django_summernote',
     'captcha',
-    'accounts'
+    'accounts',
+    "compressor",
 
 
     
 ]
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
 
 
 ROBOTS_USE_HOST=True
