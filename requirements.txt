@@ -17,3 +17,11 @@ tzdata==2024.1
 webencodings==0.5.1
 mysqlclient
 django_compressor
+cssmin
+jsmin
+soupsieve
+lxml
+html5lib
+calmjs.parse
+brotli
+csscompressor

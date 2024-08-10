@@ -19,7 +19,14 @@ STATICFILES_DIRS = [
     BASE_DIR / 'statics'
 ]
 
+COMPRESS_ENABLED = True
+COMPRESS_ROOT = STATIC_ROOT ##django compressor
+COMPRESS_OFFLINE = True
 
+if not COMPRESS_ENABLED: ##django compressor
+    COMPRESS_ENABLED = True
+    COMPRESS_CSS_FILTERS = ["compressor.filters.cssmin.CSSMinFilter"]
+    COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.JSMinFilter"] ##django compressor
 
 DATABASES = {
     'default': {

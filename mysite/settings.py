@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'captcha',
     'accounts',
     "compressor",
+    "cssmin",
+    "jsmin",
 
 
     
@@ -54,6 +56,7 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
+STATIC_DEPS=True
 
 ROBOTS_USE_HOST=True
 ROBOTS_USE_SITEMAP=True
